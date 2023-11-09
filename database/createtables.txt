@@ -1,0 +1,63 @@
+CREATE TABLE users
+(
+id int(11) not null primary key auto_increment,
+firstname varchar(20) not null,
+lastname varchar(20) not null,
+telephone varchar(20) not null,
+device_information text null COMMENT 'Get device information, such as, device, device motion, device orientation geolocation, globalization and network info',
+browser_timezone varchar(150) not null COMMENT 'Timezone from browser',
+browser_timestamp varchar(70) not null COMMENT 'Timestamp from browser',
+server_timestamp timestamp not null default CURRENT_TIMESTAMP COMMENT 'Timestamp from server' 
+)
+ENGINE = InnoDB CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1 COMMENT 'List of users personal information.';
+
+DESCRIBE users;
+
+CREATE TABLE users_address_info
+(
+id int(11) not null primary key auto_increment,
+user_id int(19) not null,
+street_address varchar(30) not null,
+house_number varchar(10) not null,
+zip_code varchar(7) not null,
+city varchar(30) not null,
+device_information text null COMMENT 'Get device information, such as, device, device motion, device orientation geolocation, globalization and network info',
+browser_timezone varchar(150) not null COMMENT 'Timezone from browser',
+browser_timestamp varchar(70) not null COMMENT 'Timestamp from browser',
+server_timestamp timestamp not null default CURRENT_TIMESTAMP COMMENT 'Timestamp from server',
+FOREIGN KEY(user_id) REFERENCES users(id)
+)
+ENGINE = InnoDB CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1 COMMENT 'List of users address information.';
+
+DESCRIBE users_address_info;
+
+CREATE TABLE users_payment_info
+(
+id int(11) not null primary key auto_increment,
+customer_id int(11) not null,
+iban varchar(6) not null COMMENT 'International Bank Account Number',
+device_information text null COMMENT 'Get device information, such as, device, device motion, device orientation geolocation, globalization and network info',
+browser_timezone varchar(150) not null COMMENT 'Timezone from browser',
+browser_timestamp varchar(70) not null COMMENT 'Timestamp from browser',
+server_timestamp timestamp not null default CURRENT_TIMESTAMP COMMENT 'Timestamp from server', 
+FOREIGN KEY(customer_id) REFERENCES users(id)
+)
+ENGINE = InnoDB CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1 COMMENT 'List of users payment information';
+
+DESCRIBE users_payment_info;
+
+CREATE TABLE users_session
+(
+id int(11) not null primary key auto_increment,
+user_id int(11) not null,
+hash varchar(64) not null,
+device_information text null COMMENT 'Get device information, such as, device, device motion, device orientation geolocation, globalization and network info',
+browser_timezone varchar(150) not null COMMENT 'Timezone from browser',
+browser_timestamp varchar(70) not null COMMENT 'Timestamp from browser',
+server_timestamp timestamp not null default CURRENT_TIMESTAMP COMMENT 'Timestamp from server', 
+FOREIGN KEY(user_id) REFERENCES users(id)
+)
+ENGINE = InnoDB CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1 COMMENT 'List of active users sessions';
+
+DESCRIBE users_session;
+
